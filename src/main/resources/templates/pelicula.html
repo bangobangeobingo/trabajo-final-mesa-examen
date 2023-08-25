@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    >
+
+<head>
+<meta charset="UTF-8">
+<title>Listado Pelicula</title>
+
+<link th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}"
+	rel="stylesheet" type="text/css" />
+<link th:rel="stylesheet"
+	th:href="@{/webjars/font-awesome/6.1.0/css/all.css}" />
+	<link th:href="@{/css/estilos_valoracion.css}" rel="stylesheet" type="text/css"
+		href="/static/css/estilos_valoracion.css">
+		<link th:href="@{/css/estilo-largo.css}" rel="stylesheet" type="text/css" href="/css/estilo-largo.css" />
+	<!-- Referencias para probar fuentes e Ã­conos-->
+	<script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+	<link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet"
+		type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+		
+</head>
+
+<body>
+        <div th:insert="/layouts/header3 :: header3"></div> 
+	
+	
+      <div class="container">
+		<div class="card-header justify-content-center">
+			<h2>Todos los puntos de <span class="text-primary">InterÃ©s</span></h2>
+		</div>
+		<div class="col-md-12 my-sm-4 d-md-flex">
+			<div class="mb-5" th:each="c : ${ListarPeli}">
+				<div class="col-md-4 mb-5">
+					<div class="card" style="width: 18rem;">
+						
+						<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<img th:src="*{'data:;base64,'+c.imagen}" width="400" height="300"
+										class="d-block w-100" alt="First slide">
+								</div>
+								
+							</div>
+							<a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+								data-slide="prev">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next" href="#carouselExampleControls" role="button"
+								data-slide="next">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a>
+
+						</div>
+
+						<div class="card-body">
+							<p class="card-text" th:text="${c.nombre}">Nombre</p>
+							<p class="card-text" th:text="${'tipoPelicula:  '+c.tipoPelicula}">Tipo De Pelicula</p>
+							<p class="card-text" th:text="${'Descripocion:  '+c.descripcion}">Descripcion</p>
+							
+							<!--<a href="#" onclick="vermas('mas');" id="mas">... [leer mÃ¡s]</a>
+							<p id="desplegar" class="card-text" th:text="${'Longitud: '+c.longitud}">Longitud</p>
+							<a href="#" onclick="vermas('menos');" id="menos">... [leer menos]</a>-->
+							<br>
+							<a th:href="@{'/poi/comentar/'+${c.idPelicula}}"><i
+									class="far fa-comments link-comentarios"></i><label
+									th:text="${c.numeroDeComentarios}"></label></a>
+
+
+							<!--<a><i class="far fa-comments link-comentarios"></i><label  th:text="${c.numeroDeComentarios}"></label></a>-->
+
+
+
+
+							<div class="btn">
+								<a class="stretched-link btn link-valorar" style="position: relative;"
+									th:href="@{'/poi/valorar/'+${c.idPelicula}}"><i class="fas fa-star"></i>Valorar</a>
+								&nbsp; &nbsp;
+
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!--Modal Editar-->
+	<div class="modal fade" id="modalValorar" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+
+			</div>
+		</div>
+	</div>
+
+	<!--Modal Vercomentarios
+	<div class="modal fade" id="modalVerComentarios" tabindex="-1" role="dialog">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content-eldos">
+
+			</div>
+		</div>
+	</div>-->
+
+
+	<script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}" type="text/javascript"
+		src="webjars/jquery/3.5.1/jquery.min.js"></script>
+	<script th:src="@{/webjars/popper.js/1.16.0/popper.min.js}" type="text/javascript"
+		src="webjars/popper.js/1.16.0/popper.min.js"></script>
+	<script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}" type="text/javascript"
+		src="webjars/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$(".link-valorar").on("click", function (event) {
+				event.preventDefault();
+				$("#modalValorar").modal("show").find(".modal-content").load($(this).attr("href"));
+			});
+		});
+	</script>
+
+	<!--
+<script type="text/javascript">
+		$(document).ready(function () {
+			$(".link-comentarios").on("click", function (event) {
+				event.preventDefault();
+				$("#modalVerComentarios").modal("show").find(".modal-content-eldos").load($(this).attr("href"));
+			});
+		});
+	</script>-->
+</body>
+</body>
+</html>

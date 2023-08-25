@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+<link th:rel="stylesheet" type="text/css" th:href="@{/css/loginstilo.css}" />
+<title>cargarusuario</title>
+
+</head>
+<body class="body-usuario">
+
+
+	<div class="container">
+		<div class="alert alert-success alert-dismissible fade show row"
+			role="alert" th:if="${formCursoErrorMessage}">
+			<label th:text="${formCursoErrorMessage}"></label>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</div>
+ 
+<div class="container">
+<h1 class="mb-0">Crear <span class="text-primary">Usuario</span></h1>
+<br>
+<section>
+<form th:object="${usuario}" th:action="${editMode}?  @{/editarUsuario} : @{/guardarusuario}" method="post">  
+  <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{contrasena}">
+  <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{estado}">
+  <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{dni}">
+    <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{id}">
+     <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{tipo}">
+  
+  <div class="mb-3">
+       <label for="nombre" class="form-label">Nombre</label>
+       <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Ingrese nombre completo" required>
+       <label for="apellido" class="form-label">Apellido</label>
+       <input type="text" class="form-control" id="apellido" th:field="*{apellido}" placeholder="Ingrese apellido" required>
+       <label for="exampleInputEmail1" class="form-label">email</label><input type="email" class="form-control" id="exampleInputEmail1" th:field="*{email}" placeholder="Ingrese email:ej@correo.com" required>   
+  </div>
+  <div class="mb-3">
+  <label for="exampleInputPassword1" class="form-label" th:if="${editMode==false}">contraseña</label>
+  <input type="password" class="form-control" 
+  id="exampleInputPassword1" 
+  th:field="*{contrasena}" th:if="${editMode==false}" 
+   placeholder="Ingrese contraseña" required>
+  <div class="alert alert-danger" th:if="${#fields.hasErrors('contrasena')}" th:errors="*{contrasena}"></div>   
+  </div>
+  <div class="mb-3">
+   <label for="dni" class="form-label" th:if="${editMode==false}">Dni</label>
+   <input type="number" class="form-control" id="dni" th:field="*{dni}" th:if="${editMode==false}" placeholder="Ingrese dni" required>
+   <div class="alert alert-danger" th:if="${#fields.hasErrors('dni')}" th:errors="*{dni}"></div>   
+           
+  </div>
+           <div class="form-group row" th:if="${editMode==null or editMode==false}">
+										<label class="col-lg-3 col-form-label form-control-label">Tipo:</label>
+										<div class="col-lg-9">
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+													th:field="${usuario.tipo}" value="CLIENTE"	checked="checked"> 
+													<label class="form-check-label"	for="gridRadios1">CLIENTE</label>
+											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="ADMIN"
+													th:field="${usuario.tipo}"> 
+													<label	class="form-check-label" for="gridRadios2">ADMIN</label>
+											</div>
+										
+											<div class="alert-danger" th:if="${#fields.hasErrors('tipo')}" th:errors="*{tipo}">Name	Error</div>
+										</div>
+									</div>
+ 
+  <button type="submit" class="btn btn-primary" ><span th:text="${editMode}?'Modificar':'Guardar'"></span>  </button>
+  <a class="btn btn-light" th:href="@{/login}">Volver</a>
+</form>
+</div>
+</section>
+<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"
+		type="text/javascript"
+		src="webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+		
+		<footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="./img/pngwing.com.png" alt="Logo de SLee Dw">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>Gracias por confiar en nosotros</h2>
+                <p>Un buen vino es como una buena película: dura un instante y te deja en la boca un sabor a gloria; es nuevo en cada sorbo y , como ocurre con las películas, nace y renace en cada saboreador.</p>
+                <p></p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2022 <b>GRUPO02</b> Calapeña-Colque-Gomez-Gaspar</small>
+        </div>
+    </footer>
+</body>
+</html>

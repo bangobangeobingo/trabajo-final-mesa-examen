@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:href="@{/css/miEstilo.css}" rel="stylesheet" type="text/css"
+	href="/static/css/miEstilo.css">
+<link th:rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!--Iconos-->
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+<link th:rel="stylesheet" type="text/css" th:href="@{/css/loginstilo.css}" />
+</head>
+<body class="body-usuario">
+
+	
+
+    <div th:insert="/layouts/header2 :: header2"></div>  
+
+
+ 
+	<div class="container">
+		<div class="alert alert-success alert-dismissible fade show row"
+			role="alert" th:if="${formCursoErrorMessage}">
+			<label th:text="${formCursoErrorMessage}"></label>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</div>
+	<div class="container">
+	<section>
+		<nav class="mb-3"></nav>
+		<article class="mb-3">
+			<form th:object="${unaPeli}" th:action="${editMode}?  @{/editarPelicula} :  @{/guardarPeli}  "
+				method="post" enctype="multipart/form-data">
+		  		    <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{estado}">		              
+				    <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{idPelicula}">		    
+                   <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{imagen}">
+			            <div class="mb-3">
+                            <label for="nombreID" class="form-label">Nombre de la Pelicula</label>
+                            <input th:field="*{nombre}" type="text" class="form-control" id="nombreID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipoID" class="form-label">Tipo de Pelicula</label>
+                            <input th:field="*{tipoPelicula}" type="text" class="form-control" id="tipoID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('tipoPelicula')}" th:errors="*{tipoPelicula}"></div>
+                        </div>
+                        
+				       <div class="mb-3">
+					     <label for="file" class="col-sm-4 col-form-label"> Subir
+						   Imagen </label>
+					     <div class="mb-3">
+						 <input type="file" name="file" class="form-control-file" id="file"
+							accept="image/x-png,image/gif,image/jpeg,image/png,image/jpeg"
+							onchange="loadFile(event)"> <img id="output"
+							style="padding-top: 2px; width: 146px;" />
+					   </div>
+                      <div class="mb-3">
+                            <label for="descripcionID" class="form-label">Descripcion</label>
+                            <input th:field="*{descripcion}" type="text" class="form-control" id="descripcionID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechainicioID" class="form-label">Fecha de Inicio</label>
+                            <input th:field="*{fechaInicio}" type="date" class="form-control" id="fechainicioID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaFinalID" class="form-label">Fecha de Inicio</label>
+                            <input th:field="*{fechaFinal}" type="date" class="form-control" id="fechaFinalID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('fechaFinal')}" th:errors="*{fechaFinal}"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="duracionID" class="form-label">Duracion</label>
+                            <input th:field="*{duracion}" type="number" class="form-control" id="duracionID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('duracion')}" th:errors="*{duracion}"></div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="horario1ID" class="form-label">Horario1</label>
+                            <input th:field="*{horario1}" type="number" class="form-control" id="horario1ID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('horario1')}" th:errors="*{horario1}"></div>
+         
+                        </div>
+                        <div class="mb-3">
+                            <label for="horario2ID" class="form-label">Horario 2</label>
+                            <input th:field="*{horario2}" type="number" class="form-control" id="horario2ID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('horario2')}" th:errors="*{horario2}"></div>
+         
+                        </div>
+                        <div class="mb-3">
+                            <label for="horario3ID" class="form-label">Horario 3</label>
+                            <input th:field="*{horario3}" type="number" class="form-control" id="horario3ID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('horario3')}" th:errors="*{horario3}"></div>
+       
+                        </div>
+                        <div class="mb-3">
+                            <label for="salaID" class="form-label">Sala</label>
+                            <input th:field="*{sala}" type="number" class="form-control" id="sala" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('sala')}" th:errors="*{sala}"></div> 
+                        </div>
+                        
+				</div>
+				<div>
+				<button type="submit" class="btn btn-primary" ><span th:text="${editMode}?'Modificar':'Guardar'"></span>  </button>
+                 <a class="btn btn-light" th:href="@{/}">Volver</a>
+				</div>
+
+			</form>
+		</article>
+	</div>
+
+	</section>
+	<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"
+		type="text/javascript"
+		src="webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+		<br>
+			<footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="./img/pngwing.com.png" alt="Logo de SLee Dw">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>Gracias por confiar en nosotros</h2>
+                <p>Un buen vino es como una buena película: dura un instante y te deja en la boca un sabor a gloria; es nuevo en cada sorbo y , como ocurre con las películas, nace y renace en cada saboreador.</p>
+                <p></p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2022 <b>GRUPO02</b> Calapeña-Colque-Gomez-Gaspar</small>
+        </div>
+    </footer>
+</body>
+</html>

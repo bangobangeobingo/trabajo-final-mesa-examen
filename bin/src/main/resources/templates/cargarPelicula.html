@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:href="@{/css/miEstilo.css}" rel="stylesheet" type="text/css"
+	href="/static/css/miEstilo.css">
+<link th:rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<header class="encabezado"> encabezados </header>
+	<!--   -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a class="nav-Link" href="/otroUsuario">Cargar Usuario</a>
+        <a class="nav-link" href="/listadoUsuario">Lista Usuario</a>
+         <a class="nav-Link" href="/nuevoPeli">Cargar Pelicula</a>
+        <a class="nav-link" href="/listadoPeliculas">Lista Pelicula</a>
+      </div>
+    </div>
+  </div>
+</nav>      
+	<div class="container">
+		<div class="alert alert-success alert-dismissible fade show row"
+			role="alert" th:if="${formCursoErrorMessage}">
+			<label th:text="${formCursoErrorMessage}"></label>
+			<button type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="Close"></button>
+		</div>
+	</div>
+	<div class="row">
+		<nav class="col-3">menu</nav>
+		<article class="col-3">
+			<form th:object="${unaPeli}" th:action="${editMode}?  @{/editarPelicula} :  @{/guardarPeli}  "
+				method="post" enctype="multipart/form-data">
+		  		    <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{estado}">		              
+				    <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{idPelicula}">		    
+                   <input type="hidden" class="form-control" th:if="${editMode}" th:field="*{imagen}">
+			            <div class="col-sm-6">
+                            <label for="nombreID" class="form-label">Nombre de la Pelicula</label>
+                            <input th:field="*{nombre}" type="text" class="form-control" id="nombreID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="tipoID" class="form-label">Tipo de Pelicula</label>
+                            <input th:field="*{tipoPelicula}" type="text" class="form-control" id="tipoID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('tipoPelicula')}" th:errors="*{tipoPelicula}"></div>
+                        </div>
+                        
+				       <div class="form-group row">
+					     <label for="file" class="col-sm-4 col-form-label"> Subir
+						   Imagen </label>
+					     <div class="col-sm-10">
+						 <input type="file" name="file" class="form-control-file" id="file"
+							accept="image/x-png,image/gif,image/jpeg,image/png,image/jpeg"
+							onchange="loadFile(event)"> <img id="output"
+							style="padding-top: 2px; width: 146px;" />
+					   </div>
+                      <div class="col-sm-6">
+                            <label for="descripcionID" class="form-label">Descripcion</label>
+                            <input th:field="*{descripcion}" type="text" class="form-control" id="descripcionID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="fechainicioID" class="form-label">Fecha de Inicio</label>
+                            <input th:field="*{fechaInicio}" type="date" class="form-control" id="fechainicioID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="fechaFinalID" class="form-label">Fecha de Inicio</label>
+                            <input th:field="*{fechaFinal}" type="date" class="form-control" id="fechaFinalID">
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('fechaFinal')}" th:errors="*{fechaFinal}"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="duracionID" class="form-label">Duracion</label>
+                            <input th:field="*{duracion}" type="number" class="form-control" id="duracionID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('duracion')}" th:errors="*{duracion}"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="horario1ID" class="form-label">Horario1</label>
+                            <input th:field="*{horario1}" type="number" class="form-control" id="horario1ID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('horario1')}" th:errors="*{horario1}"></div>
+         
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="horario2ID" class="form-label">Horario 2</label>
+                            <input th:field="*{horario2}" type="number" class="form-control" id="horario2ID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('horario2')}" th:errors="*{horario2}"></div>
+         
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="horario3ID" class="form-label">Horario 3</label>
+                            <input th:field="*{horario3}" type="number" class="form-control" id="horario3ID" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('horario3')}" th:errors="*{horario3}"></div>
+       
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="salaID" class="form-label">Sala</label>
+                            <input th:field="*{sala}" type="number" class="form-control" id="sala" >
+                            <div class="alert alert-danger" th:if="${#fields.hasErrors('sala')}" th:errors="*{sala}"></div> 
+                        </div>
+                        
+				</div>
+				<div>
+				<button type="submit" class="btn btn-primary" ><span th:text="${editMode}?'Modificar':'Guardar'"></span>  </button>
+                 <a class="btn btn-light" th:href="@{/}">Volver</a>
+				</div>
+
+			</form>
+		</article>
+	</div>
+
+	<footer> pie de pagina </footer>
+	<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"
+		type="text/javascript"
+		src="webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

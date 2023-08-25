@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>listado</title>
+<link th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+<link th:href="@{/css/miEstilo.css}" rel="stylesheet" type="text/css">
+<link th:rel="stylesheet" th:href="@{/webjars/font-awesome/6.1.0/css/all.css}" />
+<link th:rel="stylesheet" type="text/css" th:href="@{/css/loginstilo.css}" />
+ <!--Iconos-->
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="body-usuario">
+    <div th:insert="/layouts/header2 :: header2"></div> 
+
+
+ <div class="container">
+<div class="alert-danger text-center" th:if="${formUsuarioErrorMessage}" th:text="${formUsuarioErrorMessage}">Name Error</div>
+		<section>
+			<div class="table-responsive">
+				<table class="table table-sm table-dark table-hover">
+					<caption class="table-caption">List of users</caption>
+					<thead>
+						<tr class="text-center">
+							<th scope="col">nombre</th>
+							<th scope="col">Apellido</th>
+							<th scope="col">Email</th>
+							<th scope="col">dni</th>
+							<th scope="col">Edicion</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+					
+						<tr th:each="u :${ListaUsuario}" class="text-center">
+							<td th:text="${u.nombre}"></td>
+							<td th:text="${u.apellido}"></td>
+							<td th:text="${u.Email}"></td>
+							<td th:text="${u.dni}"></td>
+							<td><a class="btn btn-warning" href="#"
+								th:href="@{'/editarUsuario/'+${u.id}}">Editar</a> 
+								<a class="link-eliminar" href="#" th:onclick="'javascript:confirmarEliminar(\''+${u.id}+'\');'">
+								<i class="btn btn-secondary fa fa-trash-alt"></i></a>
+							</td>
+
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+	</div>
+	
+
+	<!-- MODAL ELIMINAR Usuario funciona con JS-->
+	<div class="modal fade" id="modalEliminar" tabindex="-1" role="dialog" aria-labelledby="eliminarModal" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="eliminarModalTitulo">Confirmar Eliminar</h5>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+		                						aria-label="Close"></button>
+										</div>
+										<div class="modal-body"><h6>¿Seguro quiere eliminar este Usuario?</h6></div>
+										<form>										
+										<input class="form-control" type="text" id="identificadorDeUsuario" name="userIdHiddenInput"/>
+										
+										</form>
+										<div class="modal-footer">									
+											<button type="button" class="btn btn-primary" th:onclick="eliminarUsuario()">Si, Borrar</button>
+											<button type="button" class="btn btn-secondary"	data-bs-dismiss="modal">Cancelar</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+	
+<!-- script que envia datos -->
+	<script type="text/javascript">
+		var exampleModal = document.getElementById('modalEliminar')
+		exampleModal.addEventListener('show.bs.modal', function(event) {
+			// Button that triggered the modal
+			var button = event.relatedTarget
+			// Extract info from data-bs-* attributes
+			var recipient = button.getAttribute('data-bs-mail')
+			var recipient2 = button.getAttribute('data-bs-whatever')
+			// If necessary, you could initiate an AJAX request here
+			// and then do the updating in a callback.
+			//
+			// Update the modal's content.
+			var modalTitle = exampleModal.querySelector('.modal-title')
+			var modalBodyInput = exampleModal
+					.querySelector('.modal-body input')
+
+			modalTitle.textContent = 'Eliminar Usuario ' + recipient
+			modalBodyInput.value = recipient2
+		})
+	</script>
+
+	
+	<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"
+		type="text/javascript" src="webjars/jquery/3.6.0/jquery.min.js"></script>
+	<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"
+		type="text/javascript"
+		src="webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript">
+		function confirmarEliminar(id) {
+			$("#identificadorDeUsuario").val(id);
+			$('#modalEliminar').modal('show');
+		}
+
+		function eliminarUsuario() {
+			var id = $("#identificadorDeUsuario").val();
+			window.location = "/eliminarUsuario/" + id;
+		}
+	</script>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="./img/pngwing.com.png" alt="Logo de SLee Dw">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>Gracias por confiar en nosotros</h2>
+                <p>Un buen vino es como una buena película: dura un instante y te deja en la boca un sabor a gloria; es nuevo en cada sorbo y , como ocurre con las películas, nace y renace en cada saboreador.</p>
+                <p></p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2022 <b>GRUPO02</b> Calapeña-Colque-Gomez-Gaspar</small>
+        </div>
+    </footer>
+</body>
+</html>

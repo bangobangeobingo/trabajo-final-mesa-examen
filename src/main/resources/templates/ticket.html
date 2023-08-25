@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link th:href="@{/css/miEstilo.css}" rel="stylesheet" type="text/css" href="/static/css/miEstilo.css">
+<link th:rel="stylesheet" type="text/css"
+	th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}">
+<meta charset="ISO-8859-1">
+<title>Usuarios - Pelicula</title>
+<link th:rel="stylesheet" type="text/css" th:href="@{/css/loginstilo.css}" />
+<!--Iconos-->
+    <script src="https://kit.fontawesome.com/eb496ab1a0.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="body-usuario">
+
+ <div th:insert="/layouts/header3 :: header3"></div>
+
+
+<div class= "container">
+<div class="alert alert-success alert-dismissible fade show row" role="alert" th:if="${formUsuarioErrorMessage}" >
+	<label th:text="${formUsuarioErrorMessage}"></label>  
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div></div>
+<div class="row">
+<nav class="col-3">  </nav>
+<article class="col-3"> 
+	<form th:object="${unTicket}" th:action="@{/guardarTicket}"	 method="post">
+	
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Usuario</label>
+    <select class="form-control"
+						th:field="*{usuario.id}">
+						<option th:each="u:${usuarios}" th:value="${u.id}"
+							th:text="${u.nombre}"></option>
+					</select>    
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Pelicula</label>
+    <select class="form-control"
+						th:field="*{pelicula.idPelicula}">
+						<option th:each="c:${pelicula}" th:value="${c.idPelicula}"
+							th:text="${c.nombre}"></option>
+					</select>
+  </div>  
+    <div class="mb-3">
+    <label for="fechaDecompra" class="form-label">Fecha de Compra</label>
+    <input th:field="*{fechadeventa}" type="date" class="form-control" id="fechaDecompra">
+  </div>  
+  
+  <div>
+  <button type="submit" class="btn btn-primary" >Inscribir</button>
+  <a class="btn btn-light" th:href="@{/}">Volver</a>
+  </div>
+  
+</form> </article>
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/5.0.0/js/bootstrap.min.js}"
+		type="text/javascript"
+		src="webjars/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+		  
+		  <br>
+		   <br>
+		    <br>
+		     <br>
+		      <br>
+		       <br>
+		       
+		  <footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="./img/pngwing.com.png" alt="Logo de SLee Dw">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>Gracias por confiar en nosotros</h2>
+                <p>Un buen vino es como una buena pel�cula: dura un instante y te deja en la boca un sabor a gloria; es nuevo en cada sorbo y , como ocurre con las pel�culas, nace y renace en cada saboreador.</p>
+                <p></p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2022 <b>GRUPO02</b> Calape�a-Colque-Gomez-Gaspar</small>
+        </div>
+    </footer>
+  
+        
+</body>
+</html>
